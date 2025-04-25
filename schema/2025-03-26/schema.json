@@ -7,7 +7,7 @@
                 "audience": {
                     "description": "Describes who the intended customer of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
                     "items": {
-                        "$ref": "#/definitions/Role"
+                        "$ref": "#/definitions/Audience"
                     },
                     "type": "array"
                 },
@@ -19,6 +19,17 @@
                 }
             },
             "type": "object"
+        },
+        "Audience": {
+            "description": "Describes the intended audience for a piece of data.\n\nThis is used to inform the client how to display or use the data.",
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/Role"
+                },
+                {
+                    "type": "string"
+                }
+            ]
         },
         "AudioContent": {
             "description": "Audio provided to or from an LLM.",
@@ -83,6 +94,13 @@
                         "arguments": {
                             "additionalProperties": {},
                             "type": "object"
+                        },
+                        "audience": {
+                            "description": "An optional list of audiences this tool call should generate result for.  'assistant' is assumed if not specified.",
+                            "items": {
+                                "$ref": "#/definitions/Audience"
+                            },
+                            "type": "array"
                         },
                         "name": {
                             "type": "string"
@@ -2015,6 +2033,13 @@
                     "$ref": "#/definitions/ToolAnnotations",
                     "description": "Optional additional tool information."
                 },
+                "audience": {
+                    "description": "An optional list of audiences this tool call can generate result for.  'assistant' is assumed if not specified",
+                    "items": {
+                        "$ref": "#/definitions/Audience"
+                    },
+                    "type": "array"
+                },
                 "description": {
                     "description": "A human-readable description of the tool.\n\nThis can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a \"hint\" to the model.",
                     "type": "string"
@@ -2136,4 +2161,3 @@
         }
     }
 }
-

@@ -714,6 +714,11 @@ export interface CallToolRequest extends Request {
   params: {
     name: string;
     arguments?: { [key: string]: unknown };
+
+    /**
+     * An optional list of audiences this tool call should generate result for.  'assistant' is assumed if not specified.
+     */
+    audience?: Audience[];
   };
 }
 
@@ -807,6 +812,11 @@ export interface Tool {
    * Optional additional tool information.
    */
   annotations?: ToolAnnotations;
+
+  /**
+   * An optional list of audiences this tool call can generate result for.  'assistant' is assumed if not specified.
+   */
+  audience?: Audience[];
 }
 
 /* Logging */
@@ -919,6 +929,11 @@ export interface SamplingMessage {
 }
 
 /**
+ * The intended customer kind for content annotations.
+ */
+export type Audience = Role | string;
+
+/**
  * Optional annotations for the client. The client can use annotations to inform how objects are used or displayed
  */
 export interface Annotations {
@@ -927,7 +942,7 @@ export interface Annotations {
    *
    * It can include multiple entries to indicate content useful for multiple audiences (e.g., `["user", "assistant"]`).
    */
-  audience?: Role[];
+  audience?: Audience[];
 
   /**
    * Describes how important this data is for operating the server.
